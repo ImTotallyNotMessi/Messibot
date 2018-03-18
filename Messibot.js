@@ -4,12 +4,20 @@ const Discord = require('discord.js');
 const config = require("./config.json");
 const client = new Discord.Client();
 
-// The ready event is vital, it means that your bot will only start reacting to information
-// from Discord _after_ ready is emitted
 client.on('ready', () => {
   console.log('Messibot is online and ready to go!');
 });
 
+client.on("reconnecting", () => {
+  console.log("Lost connection, reconnecting...");
+});
+
+client.on("disconnected", () => {
+  console.log("Disconnected from Discord");
+  process.exit(1);
+});
+
+// Gives the user information on the bot, including creators, donation link, etc.
 client.on('message', message => {
   if (message.content === '-info') {
     message.send = {
@@ -44,13 +52,12 @@ client.on('message', message => {
     }
   }});
 
-
-  // Bot Commands
-client.on('message', message => {
+// Bot Commands
+/*client.on('message', message => {
   if (message.content === '-commands') {
     
   }
-});
+});*/
 
 // Gives user client (bot) ping
 client.on('message', message => {
@@ -87,10 +94,28 @@ client.on('message', message => {
   }
 });
 
-// Gives the user a list of their roles
-client.on('message', message => {
-  if (message.content === '-roles') {
-    message.reply(message.author.roles);
+// Bot Joins channel for radio functionality.
+client.on("message", (msg) => {
+  if (msg.author !== bot.user && (msg.content.charAt(0) === config.prefix || msg.isMentioned(bot.user))) { // message is a command if starts with orefix or bot is mentioned
+      let cmd = msg.content.split(" ")[0].substring(1);
+      let args = msg.content.substring(cmd.length + 2);
+
+      // Call modules
+      modules.forEach((mod) => {
+          if (typeof mod.newCommand === "function") {
+              mod.newCommand(bot, msg, cmd, args);
+          }
+      });
+  }
+  else { // regular message
+      if (msg.author !== bot.user) {
+          // Call modules
+          modules.forEach((mod) => {
+              if (typeof mod.newMessage === "function") {
+                  mod.newMessage(bot, msg);
+              }
+          });
+      }
   }
 });
 
