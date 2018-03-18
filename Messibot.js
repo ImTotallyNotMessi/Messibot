@@ -2,102 +2,12 @@
 
 const Discord = require('discord.js');
 const config = require("./config.json");
-const radio = require("./radio.json");
 const client = new Discord.Client();
-const bot = false;
-const inChannel = false;
 
 // The ready event is vital, it means that your bot will only start reacting to information
 // from Discord _after_ ready is emitted
 client.on('ready', () => {
   console.log('Messibot is online and ready to go!');
-});
-
-client.on("disconnected", function () {
-  console.log("Messibot shutdown");
-  process.exit(1);
-});
-
-bot.on("message", function (message) {
-  if (message.author.id != bot.user.id && (message.content[0] === "!" || message.content.indexOf (bot.user.mention()) == 0 )) {
-      //console.log("Incoming command '" + message.content + "' from user " + message.author);
-      var cmdTxt = message.content.split(" ")[0].substring(1);
-      var suffix = message.content.substring(cmdTxt.length + 2);
-      if (message.content.indexOf(bot.user.mention()) == 0){
-          try {
-              cmdTxt = message.content.split(" ")[1];
-              suffix = message.content.substring(bot.user.mention().length+cmdTxt.length + 2);
-          } catch (e){
-              bot.sendMessage(message.channel,"Yes?");
-              return;
-          }
-      }
-      
-      var rstat = radio[cmdTxt]
-      
-      if (cmdTxt === "-radio") {
-          bot.sendMessage(message.channel, "__**Available radio stations:**__", function () { // message.author
-              for(var fxes in radio) {
-                  var info = "**-" + fxes + "**";
-                  var usage = radio[fxes].usage;
-                  
-                  var name = radio[fxes].name;
-                  if (name) {
-                      info += "\n\t" + name;
-                  }
-                  
-                  var url = radio[fxes].url;
-                  if (url) {
-                      info += "\n\t" + url;
-                  }
-                  bot.sendMessage(message.channel, info); // message.author
-              }
-          });
-      }
-      
-      if (rstat && inChannel) {
-              if (bot.voiceConnection.playing) {
-                  bot.voiceConnection.stopPlaying();
-              }
-              bot.voiceConnection.playFile(rstat.url);
-              bot.setStatus("idle", rstat.name);
-      }
-      
-      if (cmdTxt === "-join") {
-          if (suffix) {
-              for (var channel of message.channel.server.channels) {
-                  if (!suffix || channel.name === suffix) {
-                      bot.joinVoiceChannel(channel, function (error) {
-                          if (error != null) {
-                              console.log(error);
-                              process.exit(1);
-                          }
-                      });
-                      inChannel = true;
-                  }
-              }
-          }
-      }
-      
-      if (cmdTxt === "-leave") {
-          if (inChannel) {
-              bot.setStatus("idle");
-              bot.leaveVoiceChannel();
-              inChannel = false;
-          }
-      }
-      
-      if (cmdTxt === "-stop") {
-          if (inChannel) {
-              bot.voiceConnection.stopPlaying();
-              bot.setStatus("idle");
-          }
-      }
-      
-      if (message.author == bot.user) {
-          return;
-      }
-  }
 });
 
 client.on('message', message => {
@@ -134,7 +44,8 @@ client.on('message', message => {
     }
   }});
 
-// Bot Commands
+
+  // Bot Commands
 client.on('message', message => {
   if (message.content === '-commands') {
     
