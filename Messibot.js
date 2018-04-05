@@ -9,7 +9,7 @@ client.on('ready', () => {
 });
 
 client.on("reconnecting", () => {
-  console.log("Lost connection, reconnecting...");
+  console.log("Damnit, were'd that cable run off to... Reconnecting.");
 });
 
 client.on("disconnected", () => {

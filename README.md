@@ -1,7 +1,10 @@
 # Messibot
 ##### Discord bot made by ImTotallyNotMessi#5467
 
+To find out more about the creator. Check out his website [here](http://christianpi.ddns.net)
+
 Click [here](http://paypal.me/ImTotallyNotMessi) to support the bots development and hosting.
+
 
 ----
 
