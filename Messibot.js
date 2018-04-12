@@ -8,15 +8,6 @@ client.on('ready', () => {
   console.log('Messibot is online and ready to go!');
 });
 
-client.on("reconnecting", () => {
-  console.log("Lost connection, reconnecting...");
-});
-
-client.on("disconnected", () => {
-  console.log("Disconnected from Discord");
-  process.exit(1);
-});
-
 // Gives the user information on the bot, including creators, donation link, etc.
 client.on('message', message => {
   if (message.content === '-info') {
@@ -91,31 +82,6 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content === '-id') {
     message.reply(message.author.id);
-  }
-});
-
-// Bot Joins channel for radio functionality.
-client.on("message", (msg) => {
-  if (msg.author !== bot.user && (msg.content.charAt(0) === config.prefix || msg.isMentioned(bot.user))) { // message is a command if starts with orefix or bot is mentioned
-      let cmd = msg.content.split(" ")[0].substring(1);
-      let args = msg.content.substring(cmd.length + 2);
-
-      // Call modules
-      modules.forEach((mod) => {
-          if (typeof mod.newCommand === "function") {
-              mod.newCommand(bot, msg, cmd, args);
-          }
-      });
-  }
-  else { // regular message
-      if (msg.author !== bot.user) {
-          // Call modules
-          modules.forEach((mod) => {
-              if (typeof mod.newMessage === "function") {
-                  mod.newMessage(bot, msg);
-              }
-          });
-      }
   }
 });
 
