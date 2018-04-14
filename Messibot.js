@@ -8,18 +8,6 @@ client.on('ready', () => {
   console.log('Messibot is online and ready to go!');
 });
 
-<<<<<<< HEAD
-client.on("reconnecting", () => {
-  console.log("Damnit, were'd that cable run off to... Reconnecting.");
-});
-
-client.on("disconnected", () => {
-  console.log("Disconnected from Discord");
-  process.exit(1);
-});
-
-=======
->>>>>>> e089d6aa2b28d85e9fa6a424d77d7ece92043ef0
 // Gives the user information on the bot, including creators, donation link, etc.
 client.on('message', message => {
   if (message.content === '-info') {
