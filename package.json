@@ -1,0 +1,23 @@
+{
+  "name": "messibot",
+  "version": "1.0.0",
+  "description": "Bot made for discord. :)",
+  "main": "Messibot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImTotallyNotMessi/Messibot.git"
+  },
+  "author": "Christian \"ImTotallyNotMessi#5467\" Hiscock",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/ImTotallyNotMessi/Messibot/issues"
+  },
+  "homepage": "https://github.com/ImTotallyNotMessi/Messibot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "express": "^4.16.3"
+  }
+}
