@@ -37,7 +37,7 @@ client.on('ready', () => {
 // Bot Info
 client.on('message', message => {
   if (message.content === '-info') {
-    embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .addField("Welcome to messibot :D")
       .setColor(0xf4c430)
       .setFooter("Your family tree lgbt")
@@ -70,13 +70,6 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content === '-pfp') {
     message.reply(message.author.avatarURL);
-  }
-});
-
-// Gives the user their joindate
-client.on('message', message => {
-  if (message.content === '-joindate') {
-    message.reply(message.guild.joinedTimestamp);
   }
 });
 
